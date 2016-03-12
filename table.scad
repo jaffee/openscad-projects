@@ -39,8 +39,9 @@ color( "red", 1) {
 overhang_amnt = 4;
 base_w = t_width - (overhang_amnt * 2);
 end_overhang = 18;
+board_w = 5.5;
 
-module pedestal (bot_w, top_w, height, board_w) {
+module pedestal (bot_w, top_w, height) {
      board_thck = 1.5;
      f5run = board_thck / tan(45); // horizontal dist of 45 degree cut in board_thck wood
      post_w = 3.5;
@@ -72,15 +73,13 @@ module pedestal (bot_w, top_w, height, board_w) {
 }
 
 color("green", 1) {
-     board_w = 5.5;
-     translate([l2_w, end_overhang, 0]) pedestal(base_w, l2_end_l, top_height, board_w);
-     translate([l2_w, t_length-end_overhang-5.5, 0]) pedestal(base_w, l2_end_l, top_height, board_w);
-     translate([l2_w, (t_length-5.5)/2, 0]) pedestal(base_w, l2_end_l, top_height, board_w);
+     translate([l2_w, end_overhang, 0]) pedestal(base_w, l2_end_l, top_height);
+     translate([l2_w, t_length-end_overhang-5.5, 0]) pedestal(base_w, l2_end_l, top_height);
+     translate([l2_w, (t_length-5.5)/2, 0]) pedestal(base_w, l2_end_l, top_height);
 }
 
 color("purple", 1) {
      height = top_height;
-     board_w = 5.5;
      board_thck = 1.5;
      post_z_offset = board_thck*2;
      post_height = (height - board_thck * 4);
