@@ -26,7 +26,6 @@ for(i = [0 : num_planks-1]) {
     translate([i * plank_w, end_w, top_height]) cube([plank_w, plank_l, top_thickness]);
 }
 
-
 // second layer
 color( "red", 1) {
      translate ([l2_w, 0, l2_height]) cube([l2_end_l, l2_w, top_thickness]);
@@ -89,60 +88,3 @@ color("purple", 1) {
      translate([(t_width-1.5)/2, end_overhang-0.5, post_z_offset+midpost_height]) cube([board_thck, (t_length+1) - (end_overhang*2), 5.5]);
 }
 
-
-//
-//module stud (length, rot) {
-//    rotate(rot) cube([1.5, 3.5, length]);
-//}
-//
-//// front uprights
-//stud(height); // cube([1.5,3.5,height]);    
-//translate([shelf_width + 1.5, 0]) stud(height);
-//translate([frame_width, 0]) stud(height, [0,0,90]);
-//
-//// rear uprights
-//translate([0, depth-3.5]) stud(height);
-//translate([shelf_width + 1.5, depth-3.5]) stud(height);
-//translate([frame_width, depth-1.5]) stud(height, [0,0,90]);
-//
-//
-//
-//// shelf flats
-//translate([1.5, 0, floor_clearance+2]) stud(shelf_width, [0, 90, 0]); //cube([shelf_width, 3.5, 1.5]);
-//translate([1.5, depth-3.5, floor_clearance+2]) cube([shelf_width, 3.5, 1.5]);
-//
-//translate([1.5, 0, mid_height]) cube([shelf_width, 3.5, 1.5]);
-//translate([1.5, depth-3.5, mid_height]) cube([shelf_width, 3.5, 1.5]);
-//
-//translate([1.5, 0, height-1.5]) cube([shelf_width, 3.5, 1.5]);
-//translate([1.5, depth-3.5, height-1.5]) cube([shelf_width, 3.5, 1.5]);
-//
-//
-//// shelf depth supports
-////   bottom
-//translate([0, 3.5, floor_clearance]) cube([1.5, depth-7, 3.5]);
-//translate([shelf_width+1.5, 3.5, floor_clearance]) cube([1.5, depth-7, 3.5]);
-//
-////   middle
-//translate([0, 3.5, mid_height-2]) cube([1.5, depth-7, 3.5]);
-//translate([shelf_width+1.5, 3.5, mid_height-2]) cube([1.5, depth-7, 3.5]);
-//
-////   top
-//translate([0, 3.5, height-3.5]) cube([1.5, depth-7, 3.5]);
-//translate([shelf_width+1.5, 3.5, height-3.5]) cube([1.5, depth-7, 3.5]);
-//
-//// right side depth supports
-//translate([frame_width-1.5, 1.5, floor_clearance]) cube([1.5, depth-3, 3.5]);
-//translate([frame_width-1.5, 1.5, height-3.5]) cube([1.5, depth-3, 3.5]);
-//
-//
-//// crossbeams
-////   front bottom
-//translate([shelf_width+3, 0, floor_clearance]) cube([main_width, 1.5, 3.5]); 
-////   front top
-//translate([shelf_width+3, 0, height-3.5]) cube([main_width, 1.5, 3.5]); 
-////   back bottom
-//translate([shelf_width+3, depth-1.5, floor_clearance]) cube([main_width, 1.5, 3.5]); 
-////   back top
-//translate([shelf_width+3, depth-1.5, height-3.5]) cube([main_width, 1.5, 3.5]); 
-//
