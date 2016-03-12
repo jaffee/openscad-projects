@@ -77,13 +77,13 @@ color("green", 1) {
      translate([l2_w, t_length-end_overhang-5.5, 0]) pedestal(base_w, l2_end_l, top_height);
      translate([l2_w, (t_length-5.5)/2, 0]) pedestal(base_w, l2_end_l, top_height);
 }
+height = top_height;
+board_thck = 1.5;
+post_z_offset = board_thck*2;
+post_height = (height - board_thck * 4);
+midpost_height = (post_height - board_w) / 2;
 
 color("purple", 1) {
-     height = top_height;
-     board_thck = 1.5;
-     post_z_offset = board_thck*2;
-     post_height = (height - board_thck * 4);
-     midpost_height = (post_height - board_w) / 2;
      translate([(t_width-1.5)/2, end_overhang-0.5, post_z_offset+midpost_height]) cube([board_thck, (t_length+1) - (end_overhang*2), 5.5]);
 }
 
