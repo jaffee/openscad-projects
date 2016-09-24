@@ -3,15 +3,15 @@
 // overall height
 t_height = 30;
 // width of long planks
-plank_w = 9.25;
+plank_w = 8.6;
 // number of long planks
 num_planks = 5;
 // length of long planks
-plank_l = 95;
+plank_l = 94.75;
 // total width of table
 t_width = num_planks * plank_w;
 // width of breadboard end 
-bb_w = 11.25;
+bb_w = 10.75;
 // total length of table
 t_length = plank_l + bb_w*2;
 echo("Total Length: ", t_length);
@@ -31,7 +31,7 @@ color("lightblue", 1){
 
 l2_height = top_height - top_thickness;
 l2_thck = 1.5;
-l2_w = 3.5;
+l2_w = 3.375;
 l2_end_l = t_width - (l2_w * 2);
 
 echo("<b>TOP</b>");
@@ -39,7 +39,7 @@ echo("Top Layer:");
 echo(str(num_planks, "x 2x", plank_w, " ", plank_l));
 echo(str("2x 2x", bb_w, " ", t_width));
 echo("Base Layer:");
-echo(str("2x 2x4 ", t_length));
+echo(str("4x 2x4 ", t_length/2));
 echo(str("2x 2x4 ", l2_end_l));
 
 // second layer
@@ -47,14 +47,16 @@ color( "red", 1) {
      translate ([l2_w, 0, l2_height]) cube([l2_end_l, l2_w, l2_thck]);
      translate ([l2_w, t_length-l2_w, l2_height]) cube([l2_end_l, l2_w, l2_thck]);
 
-     translate([0, 0, l2_height]) cube([l2_w, t_length, l2_thck]);
-     translate([t_width - l2_w, 0, l2_height]) cube([l2_w, t_length, l2_thck]);
+     translate([0, 0, l2_height]) cube([l2_w, t_length/2, l2_thck]);
+     translate([0, t_length/2, l2_height]) cube([l2_w, t_length/2, l2_thck]);
+     translate([t_width - l2_w, 0, l2_height]) cube([l2_w, t_length/2, l2_thck]);
+     translate([t_width - l2_w, t_length/2, l2_height]) cube([l2_w, t_length/2, l2_thck]);
 }
 
 // legs
 overhang_amnt = 4;
 base_w = t_width - (overhang_amnt * 2);
-end_overhang = 18;
+end_overhang = 16;
 
 bot_w = base_w;
 top_w = l2_end_l;
@@ -71,22 +73,24 @@ post_height = (top_height - board_thck * 4);
 midpost_height = (post_height - board_w) / 2;
 echo("<b>LEGS</b>");
 echo("Tops:");
-echo(str("3x 2x6 ", top_w));
-echo(str("3x 2x6 ", top_w-(f5run*2)));
+echo(str("3x 2x6 ", top_w, " ish - measure once base layer in place"));
+echo(str("3x 2x6 ", top_w-(f5run*2), " 45 bevel"));
 echo("Posts:");
 echo(str("6x 2x4 ", post_height));
 echo(str("6x 2x4 ", midpost_height));
 echo("Bottoms:");
-echo(str("3x 2x6 ", bot_w));
-echo(str("3x 2x6 ", bot_w- (f5run*2)));
+echo(str("3x 2x6 ", bot_w, " 45 bevel"));
+echo(str("3x 2x6 ", bot_w-(f5run*2), " 45 bevel"));
 echo("Curves:");
-echo(str("12x 2x8 8"));
-
+curve_size = 7.25;  // length of a square side of curved thing
+curve_radius = 6.25;
+echo(str("12x 2x8 ", curve_size));
+echo(str("radius: ", curve_radius, ", offset: 1\""));
 
 module curve_support() {
      difference() {
-          cube([8, 1.5, 8]);
-          translate([8, 1.501, 8]) rotate([90,0,0]) cylinder(h=1.502, r1=7, r2=7, center=false, $fn=100);
+          cube([curve_size, 1.5, curve_size]);
+          translate([curve_size, 1.501, curve_size]) rotate([90,0,0]) cylinder(h=1.502, r1=curve_radius, r2=curve_radius, center=false, $fn=100);
      }
 }
 
@@ -129,7 +133,7 @@ module pedestal () {
      }
 }
 
-color("green", 1) {
+color("white", 1) {
      translate([l2_w, end_overhang, 0]) pedestal();
      translate([l2_w, t_length-end_overhang-5.5, 0]) pedestal();
      translate([l2_w, (t_length-5.5)/2, 0]) pedestal();
@@ -137,7 +141,7 @@ color("green", 1) {
 
 echo("dist between posts: ", t_length-end_overhang-5.5-((t_length-5.5)/2+5.5));
 
-color("purple", 1) {
+color("grey", 1) {
      translate([(t_width-1.5)/2, end_overhang, post_z_offset+midpost_height]) cube([board_thck, t_length - (end_overhang*2), 5.5]);
 }
 
