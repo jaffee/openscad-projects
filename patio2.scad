@@ -5,8 +5,8 @@ depth = 15;
 bdepth = 6; // depth of bumpout
 rail_width = 0.4;
 difference() {
-  color("grey") translate([-bay_width,0,0]) cube([19+6, depth, foundation_z]);
-  translate([-6.1, 10.6,-0.1])  cube([4.5,4.5,foundation_z+1]);
+  color("grey") translate([-bay_width-3,0,0]) cube([19+6+3, depth, foundation_z]);
+  translate([-9.1, 15-(run*6),-0.1])  cube([4.1,run*6+1,foundation_z+1]);
   
 }
 
@@ -51,21 +51,43 @@ module circlestairs() {
 }
 
 offset = 4.8;
-color("grey") translate([-6+offset, 15-offset, 0]) circlestairs();
+// color("grey") translate([-6+offset, 15-offset, 0]) circlestairs();
 
+
+railheight = 3;
 
 module railing(length) {
   spacing=0.5;
-  height=3;
   color("black") {
-    translate([0,-0.2,height]) cube([length, 0.4, 1.5/12]);
+    translate([0,-0.2,railheight]) cube([length, 0.4, 1.5/12]);
     for(j=[0.5:spacing:length]) {
-      translate([j-(spacing/2), 0, 0]) cylinder(h=height, r1=0.05, r2=0.05, $fn=60);
+      translate([j-(spacing/2), 0, 0]) cylinder(h=railheight, r1=0.05, r2=0.05, $fn=60);
     }
   }
 };
 
-translate([-5.75, 3, foundation_z]) rotate([0,0,90]) railing(7.5);
+translate([-8.75, 0, foundation_z]) rotate([0,0,90]) railing(10);
+translate([-5, 15, foundation_z]) rotate([0,0,0]) railing(23);
+translate([-4.75, 15-(run*6), foundation_z]) rotate([0,0,90]) railing(run*6);
+
+
+rise = 7/12;
+run = 10.5/12;
+
+module straightsteps() {
+  num = 6;
+  for(j=[1:num])  {
+    h=foundation_z-(j*rise);
+    color("grey") translate([0, 0, h]) cube([run*j, 4, rise]);
+    color("black") translate([(run/2)+(run*(j-1)), 3.75, h+rise]) cylinder(h=railheight, r1=0.05, r2=0.05, $fn=60);
+    color("black") translate([(run/2)+(run*(j-1)), 0.25, h+rise]) cylinder(h=railheight, r1=0.05, r2=0.05, $fn=60);
+  }
+  color("black") translate([0, 3.5, foundation_z+3+0.15]) rotate([0, atan(rise/run), 0]) cube([sqrt((run*6)^2+(rise*6)^2), 0.4, 1.5/12]);
+  color("black") translate([0, 0, foundation_z+3+0.15]) rotate([0, atan(rise/run), 0]) cube([sqrt((run*6)^2+(rise*6)^2), 0.4, 1.5/12]);
+}
+
+translate([-5, 15-(run*6), 0]) rotate([0,0,90]) straightsteps();
+//translate([0, 0, 20]) straightsteps();
 
 // akorn
 // translate([15.1,18.1,4]) { akorn(); }
